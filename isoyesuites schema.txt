@@ -1,0 +1,155 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`customer`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`customer` (
+  `customer_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `customer_fname` VARCHAR(45) NOT NULL COMMENT '',
+  `customer_lname` VARCHAR(45) NOT NULL COMMENT '',
+  `customer_phone` INT NOT NULL COMMENT '',
+  `customer_email` VARCHAR(45) NOT NULL COMMENT '',
+  PRIMARY KEY (`customer_id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`rooms`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`rooms` (
+  `room_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `room_type` VARCHAR(45) NOT NULL COMMENT '',
+  `room_number` INT NOT NULL COMMENT '',
+  `room_price` VARCHAR(45) NOT NULL COMMENT '',
+  PRIMARY KEY (`room_id`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`payment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`payment` (
+  `payment_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `payment_amount` INT NOT NULL COMMENT '',
+  `customer_id` INT NOT NULL COMMENT '',
+  `room_number` INT NOT NULL COMMENT '',
+  `room_type` VARCHAR(45) NOT NULL COMMENT '',
+  `duration` VARCHAR(45) NOT NULL COMMENT '',
+  `refno` VARCHAR(45) NOT NULL COMMENT '',
+  PRIMARY KEY (`payment_id`)  COMMENT '',
+  INDEX `cust_id_idx` (`customer_id` ASC)  COMMENT '',
+  INDEX `room_idx` (`room_number` ASC)  COMMENT '',
+  CONSTRAINT `cust_id`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `mydb`.`customer` (`customer_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `room`
+    FOREIGN KEY (`room_number`)
+    REFERENCES `mydb`.`rooms` (`room_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`bookings`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`bookings` (
+  `booking_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `customer_id` INT NOT NULL COMMENT '',
+  `room_id` INT NOT NULL COMMENT '',
+  `duration` VARCHAR(45) NOT NULL COMMENT '',
+  `booking_time` TIMESTAMP NOT NULL COMMENT '',
+  `amount_paid` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`booking_id`)  COMMENT '',
+  INDEX `cust_id_idx` (`customer_id` ASC)  COMMENT '',
+  INDEX `rtype_idx` (`room_id` ASC)  COMMENT '',
+  INDEX `amt_idx` (`amount_paid` ASC)  COMMENT '',
+  CONSTRAINT `cust_id`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `mydb`.`customer` (`customer_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `rtype`
+    FOREIGN KEY (`room_id`)
+    REFERENCES `mydb`.`rooms` (`room_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `amt`
+    FOREIGN KEY (`amount_paid`)
+    REFERENCES `mydb`.`payment` (`payment_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`checkin`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`checkin` (
+  `checkin_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `checkin_time` DATETIME NOT NULL COMMENT '',
+  `customer_id` INT NOT NULL COMMENT '',
+  `amount_paid` INT NOT NULL COMMENT '',
+  `room_number` INT NOT NULL COMMENT '',
+  `duration` VARCHAR(45) NOT NULL COMMENT '',
+  PRIMARY KEY (`checkin_id`)  COMMENT '',
+  INDEX `cust_id_idx` (`customer_id` ASC)  COMMENT '',
+  INDEX `amt_idx` (`amount_paid` ASC)  COMMENT '',
+  CONSTRAINT `cust_id`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `mydb`.`customer` (`customer_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `amt`
+    FOREIGN KEY (`amount_paid`)
+    REFERENCES `mydb`.`payment` (`payment_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`checkout`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`checkout` (
+  `checkout_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `checkout_time` DATETIME NOT NULL COMMENT '',
+  `customer_id` INT NOT NULL COMMENT '',
+  `amount_paid` INT NOT NULL COMMENT '',
+  `room_number` INT NOT NULL COMMENT '',
+  `duration` VARCHAR(45) NOT NULL COMMENT '',
+  PRIMARY KEY (`checkout_id`)  COMMENT '',
+  INDEX `cus_id_idx` (`customer_id` ASC)  COMMENT '',
+  INDEX `amt_idx` (`amount_paid` ASC)  COMMENT '',
+  CONSTRAINT `cus_id`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `mydb`.`customer` (`customer_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `amt`
+    FOREIGN KEY (`amount_paid`)
+    REFERENCES `mydb`.`payment` (`payment_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

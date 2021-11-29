@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+
+	<!--bootstrap stylesheets-->
+	<link href="static/bootstrap-4.6.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	
+	<!--fontawesome-->
+	<link href="static/fontawesome/css/all.css" rel="stylesheet" type="text/css">
+	
+	<title>ISOYE SUITES</title>
+	<style type="text/css">
+
+		body{
+			background-image: url('static/image/home.jpg');
+			
+			background-repeat:no-repeat;
+			background-attachment:fixed;
+			background-size:cover;
+			height: 100%;
+			width: 100%;
+
+		}
+		.btn-outline{
+			color: white;
+		}
+		.all{
+			background-color:rgba(163, 123, 123, 0.5) ;
+
+		}
+	</style>
+	<body>
+		<div class="all">
+		<div class="container">
+            <div class="row">
+				<div align="center" class="row sticky-top " style="width: 100%;position:fixed; padding:10px; top:0px; ">
+
+                    <nav class ="navbar navbar-expand-md navbar-light bg-light">
+                        
+                        <button  class ="navbar-toggler" type ="button" data-toggle ="collapse" data-target ="#navt">MENU
+                        </button>
+                         
+                        <div class="collapse navbar-collapse sticky-top" style="position:fixed; background-color:whitesmoke; width:100%; padding:10px; top:0px;box-sizing: border-box; " id="navt"  >
+                          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                              <a class="nav-link active" aria-current="page" href="{{ url_for('mainpage') }}">Home</a>
+                            </li>
+                                    <li class ="nav-item  ml-5">
+                                        <a class ="nav-link"  href="{{ url_for('rooms') }}"> Rooms </a>
+                                        </li>
+                                        <li class ="nav-item  ml-5">
+                                        <a class ="nav-link" href="{{ url_for('gallery') }}"> Gallery </a>
+                                        </li>
+                                        
+                                        <li class ="nav-item  ml-5">
+                                        <a class ="nav-link" href="{{ url_for('about') }}">About</a>
+                                        {% if session.get('user')!=None %}
+                                        <li class ="nav-item  ml-5">
+                                            
+                                                <a class ="nav-link" align="center" style="color:black">{{ session.get('userfname') }} </a>
+                                            
+                                        </li>
+                                          {% endif %}
+										  {% if session.get('user')==None %}
+                                            <li class ="nav-item  ml-5">
+                                        <a class ="nav-link btn"  href="/register">Register  </a>
+                                        </li>
+										{% endif %}
+                                        
+                                        {% if session.get('user')==None %}
+                                            <li class ="nav-item ml-5">
+                                        <a class ="nav-link btn"  href="/login"> Login </a>
+                                        </li>
+                                        {% endif %}
+                                        
+                            <li class ="nav-item ml-5">
+                                {% if session.get('user')!=None %}
+                                            <a class ="nav-link btn"  href="{{ url_for('signout') }}"> Log Out </a>
+                                            {% endif %}
+                            </li>
+                               
+                          </ul>
+                        </div>
+                      </div>
+                    </nav>
+
+
+				
+			</div>
+				
+			</div>
+			
+
+
+			<p style="height:100px"></p>
+
+
+        
+
+
+
+            <div style="color:white" align="center">
+            <h4>About Us</h4>
+
+
+
+            </div>
+
+            <div class="mt-5" style="color:white" align="center">
+                <h4>Contact Us </h4>
+                <ul>
+                    <li  style="color:white">Phone: +234 903 365 5531</li>
+                    <li style="color:white">Email : Tejventures@gmail.com</li>
+                    <li style="color:white">Address: Isoye Guest Inn, Kwamba, Suleja, Niger State</li>
+                </ul>
+            </div>
+
+
+			
+<!--footer-->
+<div class="row local" style="padding:30px">
+	<div class="col-md-6">
+		<p style="color:white">JOIN ISOYE SUITES<br>Recieve newsletters about prices,safety tips and much more...</p>
+	</div>
+	<div class="col-md-3">
+		<input type="email" class="form-control" placeholder="Email Address" id="newslettermail"><span>
+		
+	</div>
+	<div class="col-md-3">
+		
+			<button class="btn btn-dark">Sign Up</button>
+	</div>
+</div>
+
+
+	<div class="row local" style="padding:30px" id="footerlinks">
+		<div class="col-md-4">
+			<ul>
+				<li style="color:white"><a style="color:white" href="/about">Contact Us</a></li>
+				<li style="color:white"><a style="color:white" href="/gallery"> Gallery </a></li>
+				<li style="color:white"><a style="color:white" href="/about">Our Services</a></li>
+			</ul>
+
+		</div>
+		<div class="col-md-4">
+			<ul>
+				<h4 style="color:white">Sponsors</h4>
+				<li style="color:white">Isoye Group PLC</li>
+				<li style="color:white">Camoye LLC</li>
+				<li style="color:white">Tej Ventures</li>
+				
+			</ul>
+		</div>
+		<div class="col-md-4">
+			<ul>
+				<li style="color:white"><i class="fab fa-twitter fa-1x">&nbsp;<span>@ISOYE SUITES</span></i></li>
+				<li style="color:white"><i class="fab fa-facebook fa-1x">&nbsp;<span>@ISOYE SUITES</span></i></li>
+				<li style="color:white"><i class="fab fa-youtube fa-1x">&nbsp;<span>@ISOYE SUITES</span></i></li>
+			</ul>
+		</div>
+	</div>
+
+<!--endfooter-->
+			<!--container end-->
+		</div>
+
+
+
+
+<!-- Modal2 -->
+<div class="modal fade" id="states" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Available States</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+      	<div class="container">
+
+      		<div class="row">
+				
+						<div  class="col-md-6">
+						<a  href="abuja.html"  class="btn btn-primary mt-3" >Abuja</a>
+					</div>
+
+					<div  class="col-md-6">
+						<a href="" class="btn btn-primary mt-3" >Lagos</a>
+					</div>
+			</div>
+		</div>
+       
+
+       	
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+			<!--javascriptfiles. jquery, popper, bootstrap-->
+		<script type="text/javascript" src="static/bootstrap-4.6.0/jquery.min.js"></script>
+		
+		
+
+		<script type="text/javascript" src="static/bootstrap-4.6.0/popper.min.js"></script>
+
+		<script type="text/javascript" src="static/bootstrap-4.6.0/js/bootstrap.js"></script>
+	
+
+	</body>
+
+</html>
